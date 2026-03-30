@@ -344,6 +344,145 @@ Interactive API documentation (Swagger UI).
 3. Make your changes
 4. Submit a pull request
 
+## Deployment
+
+### Frontend Deployment (Vercel)
+
+The frontend can be deployed to Vercel for free.
+
+#### Option 1: Vercel CLI (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+Follow the prompts:
+- Set up and deploy? Yes
+- Which scope? Your Vercel username
+- Link to existing project? No
+- Project name: career-mentor-ai
+- Directory? ./
+- Want to modify settings? No
+
+#### Option 2: Vercel Dashboard
+
+1. Push your code to GitHub
+2. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+3. Click "Add New Project"
+4. Import your GitHub repository
+5. Configure:
+   - Framework Preset: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+6. Add environment variables:
+   - `VITE_GEMINI_API_KEY`
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `VITE_GESTURE_WS_URL` (see below)
+7. Deploy
+
+### Backend Deployment (Vision Service)
+
+The vision service needs to run on a server with Python. Options:
+
+#### Option 1: Railway (Recommended for Python)
+
+1. Push code to GitHub
+2. Go to [Railway](https://railway.app)
+3. Create new project from GitHub
+4. Select the repository
+5. Add the following in Railway dashboard:
+   - Build Command: `pip install -r backend/vision_service/requirements.txt`
+   - Start Command: `uvicorn app:app --host 0.0.0.0 --port $PORT`
+6. Deploy
+
+#### Option 2: Render
+
+1. Push code to GitHub
+2. Go to [Render Dashboard](https://dashboard.render.com)
+3. Create new Web Service
+4. Connect your GitHub repository
+5. Configure:
+   - Build Command: `pip install -r backend/vision_service/requirements.txt`
+   - Start Command: `uvicorn app:app --host 0.0.0.0 --port $PORT`
+6. Deploy
+
+#### Option 3: Fly.io
+
+1. Install Fly CLI
+2. Create `Dockerfile` in `backend/vision_service/`:
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 8001
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8001"]
+```
+
+3. Deploy:
+```bash
+fly launch
+fly deploy
+```
+
+### Updating Environment Variables for Production
+
+After deploying, update your frontend's environment variable:
+
+```env
+# For Vercel, set this to your vision service URL
+VITE_GESTURE_WS_URL=wss://your-vision-service.railway.app/ws/gesture
+```
+
+### Production Architecture
+
+```
+                    ┌─────────────────┐
+                    │   Vercel        │
+                    │   (Frontend)    │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+              ▼              ▼              ▼
+        ┌──────────┐   ┌──────────┐   ┌──────────┐
+        │ Supabase │   │ Gemini   │   │ Railway  │
+        │ (Auth/   │   │   AI     │   │ (Vision  │
+        │   DB)    │   │          │   │ Service) │
+        └──────────┘   └──────────┘   └──────────┘
+```
+
+### Quick Deploy Script
+
+Create `deploy.sh`:
+
+```bash
+#!/bin/bash
+
+# Build frontend
+echo "Building frontend..."
+npm run build
+
+# Deploy to Vercel (requires CLI)
+echo "Deploying to Vercel..."
+vercel --prod
+
+echo "Deployment complete!"
+```
+
+Run:
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
 ## License
 
 MIT License
