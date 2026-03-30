@@ -131,7 +131,7 @@ export const PipelineBuilder = () => {
     setSelectedStageId(null);
   }, [currentTemplate]);
 
-  const updateStageField = useCallback((field: string, value: any) => {
+  const updateStageField = useCallback((field: keyof PipelineStage, value: PipelineStage[keyof PipelineStage]) => {
     if (!selectedStageId) return;
     const newStages = currentTemplate.stages.map(s => 
       s.id === selectedStageId ? { ...s, [field]: value } : s

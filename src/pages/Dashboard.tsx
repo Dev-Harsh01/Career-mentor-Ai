@@ -31,7 +31,20 @@ import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserStats } from "@/hooks/useUserStats";
 
-const getStatsData = (userStats: any, statsLoading: boolean) => [
+type DashboardUserStats = {
+  interviewsCompleted: number;
+  averageScore: number;
+  atsScore: number;
+  recentInterviews: Array<{
+    id: string;
+    date: string;
+    score: number;
+    position: string;
+    status: string;
+  }>;
+};
+
+const getStatsData = (userStats: DashboardUserStats, statsLoading: boolean) => [
   {
     title: "Interviews Completed",
     value: statsLoading ? "..." : userStats.interviewsCompleted.toString(),
@@ -55,7 +68,7 @@ const getStatsData = (userStats: any, statsLoading: boolean) => [
   }
 ];
 
-const getRecentInterviews = (userStats: any, statsLoading: boolean) => {
+const getRecentInterviews = (userStats: DashboardUserStats, statsLoading: boolean) => {
   if (statsLoading || !userStats.recentInterviews.length) {
     return [
       { date: "No interviews yet", score: 0, position: "Start your first interview", status: "pending" }
