@@ -1,4 +1,4 @@
-# Career Mentor AI
+# Talexis
 
 An AI-powered interview practice platform that helps candidates prepare for technical interviews with real-time gesture analysis, code execution, and AI-generated feedback.
 
