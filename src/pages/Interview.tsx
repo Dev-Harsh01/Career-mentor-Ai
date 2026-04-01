@@ -164,6 +164,8 @@ export const Interview = () => {
   }, [isInterviewStarted, cameraEnabled, modelsLoaded]);
 
   useEffect(() => {
+    if (tabSwitchCount >= 3) return;
+    
     const handleVisibilityChange = () => {
       if (document.hidden && isInterviewStarted) {
         const newCount = tabSwitchCount + 1;
@@ -881,7 +883,7 @@ export const Interview = () => {
                   <Button 
                     onClick={nextQuestion}
                     className="bg-gradient-primary text-primary-foreground"
-                    disabled={currentQuestionIndex === 0 && !currentQuestion}
+                    disabled={currentQuestionIndex === 0 && !currentQuestion || tabSwitchCount >= 2}
                   >
                     {currentQuestionIndex >= MAX_QUESTIONS - 1 ? 'Finish Interview' : 'Next Question'}
                     <ArrowRight className="h-4 w-4 ml-2" />
