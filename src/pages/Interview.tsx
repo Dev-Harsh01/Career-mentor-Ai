@@ -428,11 +428,7 @@ export const Interview = () => {
 
     setUserResponses(prev => [...prev, newResponse]);
     
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setInterviewProgress(((currentQuestionIndex + 2) / MAX_QUESTIONS) * 100);
-      setShowEvaluation(false);
-    } else if (currentQuestionIndex < MAX_QUESTIONS - 1) {
+    if (questions.length < MAX_QUESTIONS) {
       generateNextQuestion().then(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setInterviewProgress(((currentQuestionIndex + 2) / MAX_QUESTIONS) * 100);
@@ -503,7 +499,7 @@ export const Interview = () => {
       setShowEvaluation(false);
       setCurrentResponse("");
       setCurrentCode("");
-    } else if (currentQuestionIndex < MAX_QUESTIONS - 1) {
+    } else if (questions.length < MAX_QUESTIONS) {
       await generateNextQuestion();
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setInterviewProgress(((currentQuestionIndex + 2) / MAX_QUESTIONS) * 100);
