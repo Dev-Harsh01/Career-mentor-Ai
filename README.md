@@ -1,4 +1,4 @@
-# Career Mentor AI
+# Talexis
 
 An AI-powered interview practice platform that helps candidates prepare for technical interviews with real-time gesture analysis, code execution, and AI-generated feedback.
 
@@ -11,6 +11,7 @@ An AI-powered interview practice platform that helps candidates prepare for tech
   - **Eye Contact**: Monitors face position to ensure you're looking at the camera
   - **Posture**: Analyzes face size to determine if you're too close or too far from camera
 - **Code Editor**: Integrated Monaco code editor for solving coding problems
+- **Voice Input**: Use speech-to-text to answer questions verbally
 - **Response Tracking**: Practice answering behavioral questions
 
 ### 2. ATS Resume Checker
@@ -19,7 +20,7 @@ An AI-powered interview practice platform that helps candidates prepare for tech
 - Match your skills with job requirements
 
 ### 3. Dashboard
-- View your interview history
+- View your interview history with scores
 - Track your progress over time
 - Access all features from a centralized location
 
@@ -38,20 +39,26 @@ An AI-powered interview practice platform that helps candidates prepare for tech
 - **Monaco Editor** - Code editor
 - **Recharts** - Data visualization
 - **React Router** - Client-side routing
+- **Framer Motion** - Animations
+- **TanStack Query** - Data fetching
 
-### Backend
-- **Python FastAPI** - Web framework
-- **OpenCV** - Computer vision for gesture analysis
-- **WebSocket** - Real-time communication
+### Backend (Vision Service)
+- **Python** - Programming language
+- **FastAPI** - Web framework
+- **OpenCV** - Computer vision
+- **WebSockets** - Real-time communication
+- **NumPy** - Numerical computing
 
-### Services
-- **Supabase** - Authentication and database
-- **Gemini AI** - AI-powered resume and interview analysis
+### Services & Integrations
+- **Supabase** - Authentication & Database
+- **Gemini AI** - LLM for question generation and evaluation
+- **Piston API** - Code execution engine
+- **Web Speech API** - Voice input for answers
 
 ## Project Structure
 
 ```
-Career-mentor-Ai/
+talexis/
 ├── src/
 │   ├── components/
 │   │   ├── ui/              # Reusable UI components (shadcn/ui)
@@ -69,13 +76,17 @@ Career-mentor-Ai/
 │   │   └── PipelineBuilder.tsx # Interview pipeline builder
 │   ├── lib/
 │   │   ├── gestureAnalysis.ts # Client-side gesture analysis
-│   │   ├── aiService.ts     # AI service integration
+│   │   ├── aiService.ts     # AI service integration (Gemini)
 │   │   └── supabaseClient.ts # Supabase client
+│   ├── hooks/
+│   │   ├── useAuth.ts       # Authentication hook
+│   │   └── useUserStats.ts # User statistics hook
 │   └── main.tsx            # Application entry point
 ├── backend/
 │   └── vision_service/
 │       ├── app.py           # FastAPI vision service
-│       └── requirements.txt # Python dependencies
+│       ├── requirements.txt # Python dependencies
+│       └── README.md        # Vision service docs
 ├── package.json             # Node.js dependencies
 ├── tailwind.config.ts       # Tailwind configuration
 └── vite.config.ts          # Vite configuration
@@ -93,7 +104,7 @@ Career-mentor-Ai/
 
 ```bash
 git clone <repository-url>
-cd Career-mentor-Ai
+cd talexis
 ```
 
 ### 2. Frontend Setup
@@ -364,7 +375,7 @@ Follow the prompts:
 - Set up and deploy? Yes
 - Which scope? Your Vercel username
 - Link to existing project? No
-- Project name: career-mentor-ai
+- Project name: talexis
 - Directory? ./
 - Want to modify settings? No
 
